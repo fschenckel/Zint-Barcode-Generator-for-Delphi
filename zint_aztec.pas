@@ -464,7 +464,7 @@ begin
     end;
 
     { look for adjacent blocks which can use the same table (right to left search) }
-    for i := blocks - 1 downto 1 do
+    for i := blocks - 2 downto 0 do
     begin
       if (blockmap[0][i] and blockmap[0][i + 1]) <> 0 then
         blockmap[0][i] := (blockmap[0][i] and blockmap[0][i + 1]);
@@ -492,7 +492,7 @@ begin
       if (blockmap[0][i] = blockmap[0][i + 1]) then
       begin
         Inc(blockmap[1][i], blockmap[1][i + 1]);
-        for j := i + 1 to blocks - 1 do
+        for j := i + 1 to blocks - 2 do
         begin
           blockmap[0][j] := blockmap[0][j + 1];
           blockmap[1][j] := blockmap[1][j + 1];
@@ -501,7 +501,7 @@ begin
       end
       else
         Inc(i);
-    until not (i < blocks);
+    until not (i < blocks - 1);
   end;
 
   { Put the adjusted block data back into typemap }
@@ -1051,7 +1051,7 @@ begin
         end;
         3:
         begin
-          for i := 32 downto 0 do
+          for i := 32 downto 1 do
           begin
             if ((data_length + adjustment_size) < Aztec36DataSizes[i - 1]) then
             begin
